@@ -1,28 +1,28 @@
 # Conditional Latent Diffusion for Attribute Editing
 
-This project explores conditional latent diffusion for face editing using StyleGAN latent representations. The gender attribute is used as a concrete example of a semantic attribute to edit, but the approach is not limited to gender. In principle, any attribute available in the dataset and represented by a trainable classifier could be used instead.
+This project studies conditional latent diffusion as a method for semantic face editing. Rather than operating directly in pixel space, the approach works in the latent space of a StyleGAN generator, where edits can be guided by a chosen attribute. Gender is used as a concrete example, but the same framework can be extended to other attributes supported by a classifier.
 
-## Project focus
-The work is centered on a diffusion-based editing method applied in the latent space of StyleGAN rather than directly in pixel space. The project investigates how different noise levels and guidance scales affect the quality of the generated edits, and it illustrates a general framework for semantic attribute editing.
+## Project overview
+The work examines how a diffusion-based editing procedure can steer a source face toward a target semantic attribute while preserving as much identity information as possible. The project focuses on the interaction between noise strength, guidance scale, and edit quality.
 
 ## Main artifacts
 - `reports/conditional-latent-diffusion-report.pdf` — the main project report
 - `notebooks/stylegan2-latent-diffusion-editing.ipynb` — the latent diffusion editing workflow
 - `notebooks/celeba-gender-classifier.ipynb` — a supporting classifier notebook used to define the target attribute
 
-## Summary of the method
-1. Generate StyleGAN latent vectors from random samples.
-2. Use a classifier to label generated faces with a chosen semantic attribute.
-3. Train a latent diffusion model conditioned on the target label.
-4. Apply SDE-Edit to progressively denoise a noisy latent vector toward the target attribute.
-5. Analyze how noise strength and guidance affect the final edited image.
+## Method
+1. Generate latent vectors from a StyleGAN generator.
+2. Use a classifier to assign a score to a chosen semantic attribute.
+3. Train a latent diffusion model conditioned on that attribute label.
+4. Apply SDE-Edit to progressively denoise a latent representation toward the desired attribute.
+5. Evaluate how the edit changes the image under different settings.
 
-## Key findings
-- Low noise preserves identity better but produces weaker attribute changes.
-- Higher noise makes the target edit stronger but can distort identity.
-- Stronger guidance increases the prominence of the chosen attribute, but may also reduce realism.
-- The method is general: the gender example is arbitrary, and the same framework could be applied to other attributes available in the dataset.
+## Key observations
+- Lower noise levels tend to preserve identity more faithfully, but produce weaker edits.
+- Higher noise levels make the attribute change more visible, but can also distort identity.
+- Stronger guidance increases the influence of the target attribute, though it may reduce realism.
+- The method is broader than the gender example: the same pipeline can be applied to other semantic attributes available in the dataset.
 
 ## Repository structure
-- `reports/` — project report files
-- `notebooks/` — analysis and experiment notebooks
+- `reports/` — report files and supporting documentation
+- `notebooks/` — experiment and analysis notebooks
